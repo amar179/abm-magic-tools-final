@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ABM Magic Tools by Amar</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; text-align: center; padding: 20px; }
+    h1 { color: #333; }
+    textarea { width: 90%; max-width: 500px; height: 100px; padding: 10px; font-size: 16px; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+    video { margin-top: 20px; width: 100%; max-width: 480px; display: none; }
+    #loading { margin-top: 20px; display: none; color: green; }
+  </style>
+</head>
+<body>
+  <h1>🎬 ABM Magic Tools by Amar</h1>
+  <p>अपनी कहानी नीचे लिखें और Cartoon वीडियो पाएं:</p>
+  <textarea id="story" placeholder="उदाहरण: a cartoon boy flying over a magical city..."></textarea><br/>
+  <button onclick="generateVideo()">🎥 Generate Cartoon Video</button>
+  <p id="loading">⏳ वीडियो बनाया जा रहा है, कृपया प्रतीक्षा करें...</p>
+  <video id="outputVideo" controls autoplay loop></video>
+
+  <script>
+    async function generateVideo() {
+      const story = document.getElementById("story").value;
+      if (!story.trim()) return alert("कृपया कोई कहानी लिखें!");
+
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("outputVideo").style.display = "none";
+
+      const response = await fetch("https://api.pollinations.ai/prompt/" + encodeURIComponent(story));
+      const videoURL = response.url;
+
+      document.getElementById("loading").style.display = "none";
+      const video = document.getElementById("outputVideo");
+      video.src = videoURL;
+      video.style.display = "block";
+    }
+  </script>
+
+  <p style="margin-top: 40px;">© 2025 ABM Magic Tools by Amar</p>
+</body>
+</html>
